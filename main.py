@@ -1,21 +1,23 @@
 import random
 
-PONTOS_EXPLORADOS = []
+MAPA = [] # Mapa do tesouro
+PONTOS_EXPLORADOS = [] # Pontos já visitados
+PONTOS_INCERTOS = []  # Pontos com mais de um caminho possivel
 
-def lermapa (mapa):
+def lermapa ():
     with open('mapa.txt','r') as file:
         for line in file:
             linha = line.strip()
             temp = []
             for char in linha:
                 temp.append(char)                
-            mapa.append(temp)
+            MAPA.append(temp)
 
 def achar_pos_inicial():
     
     numlinha =0
     numcoluna =0
-    for linha in mapa:
+    for linha in MAPA:
         numcoluna = 0
         for coluna in linha:
             if coluna == 'S':
@@ -27,16 +29,21 @@ def achar_pos_inicial():
     
 
 
-def ler_pos_proximas(posinicial,mapa):
+def ler_pos_proximas(posatual,mapa):
     #   #
     #  #S#
     #   #
     proxpos = []
     
-    cima = [posinicial[0]-1,posinicial[1]]
-    baixo = [posinicial[0]+1,posinicial[1]]
-    esq = [posinicial[0],posinicial[1]-1]
-    dir = [posinicial[0],posinicial[1]+1]
+    cima = [posatual[0]-1,posatual[1]]
+    baixo = [posatual[0]+1,posatual[1]]
+    esq = [posatual[0],posatual[1]-1]
+    dir = [posatual[0],posatual[1]+1]
+
+    if mapa[cima[0]][cima[1]] == 'T': return (["TESOURO"],cima)
+    if mapa[baixo[0]][baixo[1]] == 'T': return (["TESOURO"],baixo)
+    if mapa[esq[0]][esq[1]] == 'T': return (["TESOURO"],esq)
+    if mapa[dir[0]][dir[1]] == 'T': return (["TESOURO"],dir)
 
     if mapa[cima[0]][cima[1]] == '.': proxpos.append(cima)
     if mapa[baixo[0]][baixo[1]] == '.': proxpos.append(baixo)
@@ -49,21 +56,35 @@ def ler_pos_proximas(posinicial,mapa):
         if movimento in PONTOS_EXPLORADOS:
             proxpos.remove(movimento)
 
+    if len(proxpos) > 1:
+        PONTOS_INCERTOS.append(posatual)
+
 
     return proxpos
 
-#def mover(mapa):
+def mover(mapa,prox):
+    escolha = random.randrange(len(prox))
+    PONTOS_EXPLORADOS.append(prox[escolha])
+
+    return prox[escolha]
+
 
 if __name__ == "__main__":
-    mapa = []
-    lermapa(mapa)
+    lermapa()
     posinicial = achar_pos_inicial() # Posição inicial do aventureiro
     posatual = posinicial # Posição atual do aventureiro (inicia na inicial e muda conforme o programa)
-    pontos_incertos = [] # Pontos com mais de um caminho possivel
+    
 
-    #while True:
-    prox = ler_pos_proximas(posinicial,mapa)
-    print(prox)
+    while True:
+        prox = []
+        prox = ler_pos_proximas(posatual,MAPA)
+        if prox[0] == "TESOURO":
+            print("TESOURO ENCONTRADO EM: ", prox[1])
+            exit()
+        posatual = mover(MAPA,prox)
+        print("POSICAO ATUAL",  posatual)
+        print("PONTOS EXPLORADOS:",  PONTOS_EXPLORADOS)
+        print("PONTOS INCERTOS" , PONTOS_INCERTOS)
 
     
     
