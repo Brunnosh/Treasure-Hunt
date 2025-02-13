@@ -1,6 +1,12 @@
 # Treasure-Hunt
 Atividade de i.a
 
+#Grupo
+- Bruno Tasso Savoia
+- Vitor Hugo 
+- Nicole Silvestrini
+- Luan Ferreira
+
 ## Como fazer o programa rodar
 - Clonar repositorio
 - Abrir com VScode
@@ -13,4 +19,4 @@ Atividade de i.a
 
 
 
-#Grupo
+
