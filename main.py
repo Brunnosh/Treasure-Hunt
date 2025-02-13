@@ -52,11 +52,11 @@ def ler_pos_proximas(posatual):
 
     #Remover do vetor movimentos possiveis pontos onde ja foi explorado
 
-    print("PONTOS EXPLORADOS: ", PONTOS_EXPLORADOS)
-    for movimento in proxpos:
-        print("MOVIMENTO NO PROXPOS: ", movimento)
-        if movimento in PONTOS_EXPLORADOS:
-            proxpos.remove(movimento)
+    movRepetidos = []
+
+    proxpos = [mov for mov in proxpos if mov not in PONTOS_EXPLORADOS]
+        
+    
 
     if len(proxpos) > 1: # Adiciona a lista de pontos com mais de uma possibilidade de movimento
         PONTOS_INCERTOS.append(posatual)
