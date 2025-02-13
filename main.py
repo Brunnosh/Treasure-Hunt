@@ -119,6 +119,10 @@ def plotar_mapa():
     # Ajustar o gráfico
     ax.set_aspect('equal')
     plt.gca().invert_yaxis()  # Para o gráfico ficar mais como um mapa tradicional
+
+    ax.text(1, -len(MAPA) - 1.5, f"Passos Totais: {len(PONTOS_EXPLORADOS)}", fontsize=12, color="red")
+    ax.text(1, -len(MAPA) - 3, f"Menor Caminho: {len(CAMINHO_CORRETO)}", fontsize=12, color="green")
+
     plt.show()
 
 
