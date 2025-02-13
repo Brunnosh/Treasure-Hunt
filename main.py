@@ -1,4 +1,5 @@
 import random
+from matplotlib import pyplot as plt
 
 MAPA = [] # MAPA do tesouro
 PONTOS_EXPLORADOS = [] # Pontos já visitados
@@ -90,6 +91,36 @@ def voltarUltimoAmbiguo():
 
     return ultimoValor
 
+def plotar_mapa():
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+
+
+    # Plotando o mapa
+    for i in range(len(MAPA)):
+        for j in range(len(MAPA[i])):
+            if MAPA[i][j] == '#':
+                ax.plot(j, i, marker='s', color='black', markersize=10)  # Parede
+            elif MAPA[i][j] == '.':
+                ax.plot(j, i, marker='s', color='white', markersize=10)  # Caminho livre
+            elif MAPA[i][j] == 'S':
+                ax.plot(j, i, marker='o', color='blue', markersize=12)  # Início
+            elif MAPA[i][j] == 'T':
+                ax.plot(j, i, marker='o', color='yellow', markersize=12)  # Tesouro
+
+    # Plotando o caminho explorado (linha vermelha)
+    for ponto in PONTOS_EXPLORADOS:
+        ax.plot(ponto[1], ponto[0], marker='o', color='red', markersize=6)
+
+    # Plotando o caminho correto (linha verde)
+    for ponto in CAMINHO_CORRETO:
+        ax.plot(ponto[1], ponto[0], marker='o', color='green', markersize=6)
+
+    # Ajustar o gráfico
+    ax.set_aspect('equal')
+    plt.gca().invert_yaxis()  # Para o gráfico ficar mais como um mapa tradicional
+    plt.show()
+
 
 if __name__ == "__main__":
     lerMAPA()
@@ -107,9 +138,11 @@ if __name__ == "__main__":
             print("TAMANHO DO MENOR CAMINHO: ", len(CAMINHO_CORRETO))
             print("CAMINHO FINAL: ", CAMINHO_CORRETO)
             print("TESOURO ENCONTRADO EM: ", prox[1])
+            plotar_mapa()
             exit()
         if prox[0] == 'SEM SAIDA':
             posatual = voltarUltimoAmbiguo()
+
         else:
             posatual = mover(prox)
         
