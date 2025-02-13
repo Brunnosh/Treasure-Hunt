@@ -3,6 +3,8 @@ import random
 MAPA = [] # MAPA do tesouro
 PONTOS_EXPLORADOS = [] # Pontos já visitados
 PONTOS_INCERTOS = []  # Pontos com mais de um caminho possivel
+CAMINHO_CORRETO = [] # A cada vez que o codigo volta num ponto incerto, remove todos os pontos após aquele ponto no array
+
 
 def lerMAPA ():
     with open('MAPA.txt','r') as file:
@@ -23,6 +25,7 @@ def achar_pos_inicial():
             if coluna == 'S':
                 posinicial = [numlinha,numcoluna]
                 PONTOS_EXPLORADOS.append(posinicial)
+                CAMINHO_CORRETO.append(posinicial)
                 return posinicial
             numcoluna = numcoluna +1
         numlinha = numlinha + 1
@@ -70,13 +73,20 @@ def ler_pos_proximas(posatual):
 def mover(prox):
     escolha = random.randrange(len(prox))
     PONTOS_EXPLORADOS.append(prox[escolha])
+    CAMINHO_CORRETO.append(prox[escolha])
 
     return prox[escolha]
 
 def voltarUltimoAmbiguo():
+    global CAMINHO_CORRETO
+
     tam = len(PONTOS_INCERTOS)
     ultimoValor = PONTOS_INCERTOS[tam-1]
     PONTOS_INCERTOS.remove(ultimoValor)
+
+    if ultimoValor in CAMINHO_CORRETO:
+        indice = CAMINHO_CORRETO.index(ultimoValor)
+        CAMINHO_CORRETO = CAMINHO_CORRETO[:indice+1]
 
     return ultimoValor
 
@@ -93,6 +103,7 @@ if __name__ == "__main__":
         prox = ler_pos_proximas(posatual)
         print(prox)
         if prox[0] == 'TESOURO':
+            print("CAMINHO FINAL: ", CAMINHO_CORRETO)
             print("TESOURO ENCONTRADO EM: ", prox[1])
             exit()
         if prox[0] == 'SEM SAIDA':
@@ -102,7 +113,5 @@ if __name__ == "__main__":
         
 
     
-    
 
-#Lógica
 
