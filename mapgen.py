@@ -1,5 +1,7 @@
 import random
 
+largura, altura = 32, 12  # Tamanho do mapa
+
 def gerar_mapa(largura, altura):
     # Criar um mapa cheio de paredes
     mapa = [["#" for _ in range(largura)] for _ in range(altura)]
@@ -45,7 +47,6 @@ def salvar_mapa(mapa, nome_arquivo="mapa.txt"):
             file.write("".join(linha) + "\n")
 
 # Gerar e salvar o mapa
-largura, altura = 32, 12  # Tamanho do mapa
 mapa_gerado = gerar_mapa(largura, altura)
 salvar_mapa(mapa_gerado)
 

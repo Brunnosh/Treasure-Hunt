@@ -138,9 +138,9 @@ if __name__ == "__main__":
         prox = ler_pos_proximas(posatual)
         print(prox)
         if prox[0] == 'TESOURO':
+            print("CAMINHO FINAL: ", CAMINHO_CORRETO)
             print("PASSOS NO TOTAL: ", len(PONTOS_EXPLORADOS))
             print("TAMANHO DO MENOR CAMINHO: ", len(CAMINHO_CORRETO))
-            print("CAMINHO FINAL: ", CAMINHO_CORRETO)
             print("TESOURO ENCONTRADO EM: ", prox[1])
             plotar_mapa()
             exit()
