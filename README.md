@@ -9,6 +9,7 @@ Atividade de i.a
 
 ## Como fazer o programa rodar
 - Clonar repositorio
+- Instalar Python e VsCode
 - Abrir com VScode
 - No terminal :
 - -  python -m venv .venv
