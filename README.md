@@ -13,8 +13,8 @@ Atividade de i.a
 - Abrir com VScode
 - No terminal :
 - -  python -m venv .venv
-  -  (Windows): .\.venv\Scripts\activate 
-  -  (Mac/Linux): source .venv/bin/activate 
+  -  (Windows): ".venv\Scripts\activate"
+  -  (Mac/Linux): "source .venv/bin/activate"
   -  pip install -r requirements.txt
 
 
